@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fcc.notebook.dao.shareInfoMapper">
+  <resultMap id="BaseResultMap" type="com.fcc.notebook.bean.shareInfo">
+    <id column="shareId" jdbcType="INTEGER" property="shareid" />
+    <result column="noteId" jdbcType="INTEGER" property="noteid" />
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="isEdit" jdbcType="BIT" property="isedit" />
+    <result column="isComment" jdbcType="BIT" property="iscomment" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="storeUrl" jdbcType="VARCHAR" property="storeurl" />
+    <result column="shareTime" jdbcType="TIMESTAMP" property="sharetime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    shareId, noteId, userId, isEdit, isComment, comment, storeUrl, shareTime
+  </sql>
+  <select id="selectByExample" parameterType="com.fcc.notebook.bean.shareInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from shareinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shareinfo
+    where shareId = #{shareid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from shareinfo
+    where shareId = #{shareid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fcc.notebook.bean.shareInfoExample">
+    delete from shareinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fcc.notebook.bean.shareInfo">
+    insert into shareinfo (shareId, noteId, userId, 
+      isEdit, isComment, comment, 
+      storeUrl, shareTime)
+    values (#{shareid,jdbcType=INTEGER}, #{noteid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{isedit,jdbcType=BIT}, #{iscomment,jdbcType=BIT}, #{comment,jdbcType=VARCHAR}, 
+      #{storeurl,jdbcType=VARCHAR}, #{sharetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fcc.notebook.bean.shareInfo">
+    insert into shareinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shareid != null">
+        shareId,
+      </if>
+      <if test="noteid != null">
+        noteId,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="isedit != null">
+        isEdit,
+      </if>
+      <if test="iscomment != null">
+        isComment,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="storeurl != null">
+        storeUrl,
+      </if>
+      <if test="sharetime != null">
+        shareTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shareid != null">
+        #{shareid,jdbcType=INTEGER},
+      </if>
+      <if test="noteid != null">
+        #{noteid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="isedit != null">
+        #{isedit,jdbcType=BIT},
+      </if>
+      <if test="iscomment != null">
+        #{iscomment,jdbcType=BIT},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="storeurl != null">
+        #{storeurl,jdbcType=VARCHAR},
+      </if>
+      <if test="sharetime != null">
+        #{sharetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fcc.notebook.bean.shareInfoExample" resultType="java.lang.Long">
+    select count(*) from shareinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update shareinfo
+    <set>
+      <if test="record.shareid != null">
+        shareId = #{record.shareid,jdbcType=INTEGER},
+      </if>
+      <if test="record.noteid != null">
+        noteId = #{record.noteid,jdbcType=INTEGER},
+      </if>
+      <if test="record.userid != null">
+        userId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.isedit != null">
+        isEdit = #{record.isedit,jdbcType=BIT},
+      </if>
+      <if test="record.iscomment != null">
+        isComment = #{record.iscomment,jdbcType=BIT},
+      </if>
+      <if test="record.comment != null">
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeurl != null">
+        storeUrl = #{record.storeurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sharetime != null">
+        shareTime = #{record.sharetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update shareinfo
+    set shareId = #{record.shareid,jdbcType=INTEGER},
+      noteId = #{record.noteid,jdbcType=INTEGER},
+      userId = #{record.userid,jdbcType=INTEGER},
+      isEdit = #{record.isedit,jdbcType=BIT},
+      isComment = #{record.iscomment,jdbcType=BIT},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      storeUrl = #{record.storeurl,jdbcType=VARCHAR},
+      shareTime = #{record.sharetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fcc.notebook.bean.shareInfo">
+    update shareinfo
+    <set>
+      <if test="noteid != null">
+        noteId = #{noteid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="isedit != null">
+        isEdit = #{isedit,jdbcType=BIT},
+      </if>
+      <if test="iscomment != null">
+        isComment = #{iscomment,jdbcType=BIT},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="storeurl != null">
+        storeUrl = #{storeurl,jdbcType=VARCHAR},
+      </if>
+      <if test="sharetime != null">
+        shareTime = #{sharetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where shareId = #{shareid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fcc.notebook.bean.shareInfo">
+    update shareinfo
+    set noteId = #{noteid,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=INTEGER},
+      isEdit = #{isedit,jdbcType=BIT},
+      isComment = #{iscomment,jdbcType=BIT},
+      comment = #{comment,jdbcType=VARCHAR},
+      storeUrl = #{storeurl,jdbcType=VARCHAR},
+      shareTime = #{sharetime,jdbcType=TIMESTAMP}
+    where shareId = #{shareid,jdbcType=INTEGER}
+  </update>
+</mapper>
